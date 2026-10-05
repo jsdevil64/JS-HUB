@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Hub Portal</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #070b16;
+      --card: rgba(18, 25, 45, 0.78);
+      --border: rgba(255,255,255,0.10);
+      --text: #f7f9ff;
+      --muted: #9ba7bf;
+      --accent: #7c5cff;
+      --accent-2: #24c8ff;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(124,92,255,.20), transparent 32%),
+        radial-gradient(circle at 85% 75%, rgba(36,200,255,.14), transparent 30%),
+        var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    .container {
+      width: min(980px, 92%);
+      padding: 42px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.045);
+      color: #c8d0e4;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .badge span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #55e39b;
+      box-shadow: 0 0 12px #55e39b;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 72px);
+      line-height: .98;
+      letter-spacing: -.045em;
+      font-weight: 800;
+    }
+
+    .gradient {
+      background: linear-gradient(100deg, #fff 15%, #9f8cff 55%, #5edbff 95%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      max-width: 560px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .hubs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .hub {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--card);
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      transition: transform .25s ease, border-color .25s ease,
+                  box-shadow .25s ease;
+    }
+
+    .hub::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -65px;
+      top: -75px;
+      border-radius: 50%;
+      background: var(--glow);
+      filter: blur(18px);
+      opacity: .18;
+      transition: opacity .25s ease;
+    }
+
+    .hub:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 28px 70px rgba(0,0,0,.38);
+    }
+
+    .hub:hover::before {
+      opacity: .35;
+    }
+
+    .event {
+      --glow: #7c5cff;
+    }
+
+    .raid {
+      --glow: #24c8ff;
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      font-size: 26px;
+      margin-bottom: 26px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .number {
+      position: absolute;
+      top: 25px;
+      right: 27px;
+      color: rgba(255,255,255,.25);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .1em;
+    }
+
+    h2 {
+      font-size: 27px;
+      letter-spacing: -.02em;
+      margin-bottom: 10px;
+    }
+
+    .description {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+      max-width: 370px;
+    }
+
+    .open {
+      margin-top: auto;
+      padding-top: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #e9edff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .arrow {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      transition: transform .25s ease, background .25s ease;
+    }
+
+    .hub:hover .arrow {
+      transform: translateX(4px);
+      background: rgba(255,255,255,.12);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #66718a;
+      font-size: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        padding: 28px 0;
+      }
+
+      .brand {
+        margin-bottom: 28px;
+      }
+
+      .hubs {
+        grid-template-columns: 1fr;
+      }
+
+      .hub {
+        min-height: 270px;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <section class="brand">
+      <div class="badge">
+        <span></span>
+        Central Hub
+      </div>
+
+      <h1>
+        Welcome to<br />
+        <span class="gradient">JS Hub</span>
+      </h1>
+
+      <p class="subtitle">
+        Choose a destination below to access your events, raids,
+        schedules and community activities.
+      </p>
+    </section>
+
+    <section class="hubs">
+
+      <!-- Link 1: Event Hub -->
+      <a class="hub event" href="https://jsdevil64.github.io/JS-event-trichy/">
+        <span class="number">01</span>
+        <div class="icon">🎉</div>
+
+        <h2>Event Hub</h2>
+        <p class="description">
+          Explore upcoming events, schedules, announcements and
+          everything happening in your community.
+        </p>
+
+        <div class="open">
+          <span>Open Event Hub</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Link 2: Raid Hub -->
+      <a class="hub raid" href="transport.html">
+        <span class="number">02</span>
+        <div class="icon">🚖</div>
+
+        <h2>Raid Hub</h2>
+        <p class="description">
+          Find raid information, team activities, schedules and
+          everything you need for your next raid.
+        </p>
+
+        <div class="open">
+          <span>Open Raid Hub</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </section>
+
+    <footer>
+      © 2026 · Hub Portal
+    </footer>
+
+  </main>
+</body>
+</html>

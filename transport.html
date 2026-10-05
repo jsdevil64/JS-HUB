@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vehicle Services</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 25px 15px;
+    font-family: Arial, sans-serif;
+    background: #f2f5f9;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.container {
+    max-width: 500px;
+    margin: auto;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px;
+    margin: 16px 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px #00000012;
+    cursor: pointer;
+    overflow: hidden;
+    min-height: 95px;
+}
+
+.card:hover {
+    background: #eaf3ff;
+}
+
+.details {
+    order: 1;
+}
+
+.details h3 {
+    margin: 0 0 7px;
+}
+
+.details p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Vehicle initially right side */
+.vehicle {
+    order: 2;
+    font-size: 42px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Right to left animation */
+.vehicle.moving {
+    animation: moveLeft 0.8s ease-in-out forwards;
+}
+
+@keyframes moveLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateX(-100px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-160px);
+        opacity: 0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Choose Your Service</h2>
+
+<div class="container">
+
+    <!-- AUTO -->
+    <div class="card" data-link="https://jsdevil64.github.io/Auto/">
+
+        <div class="details">
+            <h3>Auto</h3>
+            <p>Click to continue</p>
+        </div>
+
+        <span class="vehicle">🛺</span>
+
+    </div>
+
+    <!-- CAR -->
+    <div class="card" data-link="https://jsdevil64.github.io/Cab/">
+
+        <div class="details">
+            <h3>Car</h3>
+            <p>Click to continue</p>
+        </div>
+
+        <span class="vehicle">🚗</span>
+
+    </div>
+
+    <!-- VAN -->
+    <div class="card" data-link="https://jsdevil64.github.io/Mini-van/">
+
+        <div class="details">
+            <h3>Van</h3>
+            <p>Click to continue</p>
+        </div>
+
+        <span class="vehicle">🚐</span>
+
+    </div>
+
+    <!-- MINI LOGISTICS -->
+    <div class="card" data-link="https://jsdevil64.github.io/Mini-logistics-/">
+
+        <div class="details">
+            <h3>Mini Logistics</h3>
+            <p>Click to continue</p>
+        </div>
+
+        <span class="vehicle">🚚</span>
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(".card").forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        const vehicle = card.querySelector(".vehicle");
+        const link = card.dataset.link;
+
+        if (vehicle.classList.contains("moving")) {
+            return;
+        }
+
+        if (!link || link.includes("_WEBSITE_LINK")) {
+            alert("Please add website link!");
+            return;
+        }
+
+        vehicle.classList.add("moving");
+
+        setTimeout(() => {
+            window.location.href = link;
+        }, 800);
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
